@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: user-svc-1
+  labels:
+    app: user-svc-1
+  name: user-svc-1
+spec:
+  ports:
+  
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001
+   
+   
+  selector:
+    app: user-svc-1
+  type: ClusterIP
