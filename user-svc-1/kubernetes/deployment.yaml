@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: user-svc-1
+  name: user-svc-1
+  labels:
+    app: user-svc-1
+spec:
+  selector:
+    matchLabels:
+      app: user-svc-1
+  template:
+    metadata:
+      labels:
+        app: user-svc-1
+        name: user-svc-1
+    spec:
+      containers:
+        - name: user-svc-1
+          image: srinath-intelops/test-project-srinath-1/user-svc-1
+          imagePullPolicy: Always
+        
+          env:
+            - name: SERVICE_NAME
+              value: "go-app"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "localhost:4317"
+            - name: INSECURE_MODE
+              value: "true"
+        
+          ports:
+        
+        
+          - containerPort: 8001
+            name: http
+        
+        
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 30
+        
